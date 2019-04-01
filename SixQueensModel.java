@@ -1,3 +1,13 @@
+/*
+====================================================================
+Name: Cameron Hudson
+File:SixQueensModel.java
+
+Model the backend logic.  Handles instantiating a BoardState and
+listening to the ViewProxy for 
+=====================================================================
+*/
+
 import java.util.LinkedList;
 
 public class SixQueensModel implements ViewListener{
@@ -9,6 +19,14 @@ public class SixQueensModel implements ViewListener{
 	private ModelListener turn;
 	private boolean isFinished;
 
+	/**
+	 * BoardState
+	 *
+	 * Constructs a BoardState object
+	 *
+	 * @param None
+	 * @return None
+	 */
 	public SixQueensModel(){
 		board = new BoardState();
 	}
@@ -36,7 +54,7 @@ public class SixQueensModel implements ViewListener{
 	}
 
 	public void squareChosen(int row, int col, ModelListener view){
-		if (view != turn /* //TODO Or spot is not open */){
+		if (view != turn || board.isBlocked(row, col)){
 			return;
 		} else {
 			setQueen(row, col, view);
@@ -44,8 +62,10 @@ public class SixQueensModel implements ViewListener{
 	}
 
 	public void quit(ModelListener view){
-		if(view1 != null) view.quit();
-		if(view2 != null) view.quit();
+		if (view1 != null)
+			view1.quit();
+		if (view2 != null)
+			view2.quit();
 		turn = null;
 		isFinished = true;
 	}
@@ -84,8 +104,26 @@ public class SixQueensModel implements ViewListener{
 		view1.setQueen(row, col);
 		view2.setQueen(row, col);
 
+		for(int i = 0; i < 6; i++){
+			for(int j = 0; j < 6; j++){
+				if(board.isBlocked(i, j)){
+					view1.setVisible(i, j);
+					view2.setVisible(i, j);
+				}
+			}
+		}
+
 		if(board.checkWin()){
-			//TODO implement win logic
+			// Current player wins.
+			turn = null;
+			if (view == view1){
+				view1.youWin();
+				view2.otherWin(name1);
+			}
+			else{
+				view1.otherWin(name2);
+				view2.youWin();
+			}
 		} else {
 			if(turn == view1){
 				// Currnently View1's turn

@@ -57,13 +57,14 @@ public class SixQueensServer{
 //                             Private Methods                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	/*
-	=================================================================
-	serverUsage
-
-	prints a uage message for the server.
-	=================================================================
-	*/
+	/**
+	 * serverUsage
+	 *
+	 * prints a uage message for the server.
+	 *
+	 * @param None
+	 * @return None
+	 */
 	public static void serverUsage(){
 		System.err.println("Usage: java SixQueensServer <host> <port>");
 		System.exit(1);

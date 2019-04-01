@@ -89,7 +89,7 @@ public class SixQueensView implements ModelListener {
         frame.addWindowListener (new WindowAdapter(){
             public void windowClosing (WindowEvent e){
                 if (listener != null)
-                    listener.quit (SixQueensView.this);
+                    listener.quit(SixQueensView.this);
                 System.exit (0);
             }
         });
@@ -192,19 +192,25 @@ public class SixQueensView implements ModelListener {
     }
 
     public void youWin(){
-
+        onSwingThreadDo (new Runnable(){
+            public void run(){
+                messageField.setText ("You win!");
+                newGameButton.setEnabled (true);
+            }
+        });
     }
 
     public void otherWin(String name){
-
-    }
-
-    public void draw(){
-
+        onSwingThreadDo (new Runnable(){
+            public void run(){
+                messageField.setText (name + " wins!");
+                newGameButton.setEnabled (true);
+            }
+        });
     }
 
     public void quit(){
-
+        System.exit(0);
     }
 
     private static void onSwingThreadDo(Runnable task){

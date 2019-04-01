@@ -69,7 +69,14 @@ public class ViewProxy implements ModelListener{
     }
 
     public void setVisible(int r, int c){
-
+    	try{
+			out.writeByte ('V');
+			out.writeByte (r);
+			out.writeByte (c);
+			out.flush();
+		} catch (IOException exc) {
+			error (exc);
+		}
     }
 
     public void waitingForPartner(){
@@ -101,19 +108,31 @@ public class ViewProxy implements ModelListener{
     }
 
     public void youWin(){
-
+    	try{
+			out.writeByte ('Y');
+			out.flush();
+		} catch(IOException exc) {
+			error (exc);
+		}
     }
 
     public void otherWin(String name){
-
-    }
-
-    public void draw(){
-
+    	try{
+			out.writeByte ('X');
+			out.writeUTF (name);
+			out.flush();
+		} catch(IOException exc) {
+			error (exc);
+		}
     }
 
     public void quit(){
-
+    	try{
+			out.writeByte ('Z');
+			out.flush();
+		} catch(IOException exc) {
+			error (exc);
+		}
     }
 
 
@@ -135,12 +154,15 @@ public class ViewProxy implements ModelListener{
 							break;
 						case 'J':
 							name = in.readUTF();
-							listener.join (ViewProxy.this, name);
+							listener.join(ViewProxy.this, name);
 							break;
 						case 'S':
 							row = in.readByte();
 							col = in.readByte();
 							listener.squareChosen(row, col, ViewProxy.this);
+							break;
+						case 'Z':
+							listener.quit(ViewProxy.this);
 							break;
 						default:
 							error ("Bad message");

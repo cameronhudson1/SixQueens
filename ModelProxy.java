@@ -71,7 +71,12 @@ public class ModelProxy implements ViewListener{
 	}
 
 	public void quit(ModelListener view){
-
+		try{
+			out.writeByte('Z');
+			out.flush();
+		} catch (IOException exc) {
+			error (exc);
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,6 +114,16 @@ public class ModelProxy implements ViewListener{
 						case 'U':
 							name = in.readUTF();
 							listener.otherTurn (name);
+							break;
+						case 'Y':
+							listener.youWin();
+							break;
+						case 'X':
+							name = in.readUTF();
+							listener.otherWin(name);
+							break;
+						case 'Z':
+							listener.quit();
 							break;
 						default:
 							error ("Bad message");

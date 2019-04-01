@@ -30,7 +30,5 @@ public interface ModelListener{
 
 	public void otherWin(String name);
 
-	public void draw();
-
 	public void quit();
 }
