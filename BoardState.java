@@ -20,4 +20,15 @@ public class BoardState{
 	public void setQueen(int r, int c){
 		queenBoard[r][c] = true;
 	}
+
+	/**
+	 * checkBoardWin
+	 *
+	 * Determines if a player has won the game and returns true if so.
+	 * @param None
+	 * @return None
+	 */
+	public boolean checkWin(){
+		return false;
+	}
 }

@@ -59,7 +59,7 @@ public class ModelProxy implements ViewListener{
 		}
 	}
 
-	public void squareChosen(int row, int col){
+	public void squareChosen(int row, int col, ModelListener view){
 		try{
 			out.writeByte('S');
 			out.writeByte(row);

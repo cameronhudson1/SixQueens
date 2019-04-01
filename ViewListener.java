@@ -15,6 +15,6 @@ model should be implemented here
 public interface ViewListener{
 	public void newGame(ModelListener view);
 	public void join(ModelListener view, String name);
-	public void squareChosen(int row, int col);
+	public void squareChosen(int row, int col, ModelListener view);
 	public void quit(ModelListener view);
 }

@@ -35,10 +35,12 @@ public class SixQueensModel implements ViewListener{
 		}
 	}
 
-	public void squareChosen(int row, int col){
-		board.setQueen(row, col);
-		view1.setQueen(row, col);
-		view2.setQueen(row, col);
+	public void squareChosen(int row, int col, ModelListener view){
+		if (view != turn /* //TODO Or spot is not open */){
+			return;
+		} else {
+			setQueen(row, col, view);
+		}
 	}
 
 	public void quit(ModelListener view){
@@ -74,5 +76,29 @@ public class SixQueensModel implements ViewListener{
 		turn = view1;
 		view1.yourTurn();
 		view2.otherTurn (name1);
+	}
+
+
+	private void setQueen(int row, int col, ModelListener view){
+		board.setQueen(row, col);
+		view1.setQueen(row, col);
+		view2.setQueen(row, col);
+
+		if(board.checkWin()){
+			//TODO implement win logic
+		} else {
+			if(turn == view1){
+				// Currnently View1's turn
+				turn = view2;
+				view2.yourTurn();
+				view1.otherTurn (name1);
+			} else {
+				// Currently View2's turn
+				turn = view1;
+				view1.yourTurn();
+				view2.otherTurn (name1);
+			}
+		}
+
 	}
 }

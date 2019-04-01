@@ -75,7 +75,7 @@ public class SixQueensView implements ModelListener {
         board.setListener(new SixQueensJPanelListener(){
             public void squareClicked(int r, int c){
                 if (listener != null)
-                    listener.squareChosen(r, c);
+                    listener.squareChosen(r, c, SixQueensView.this);
             }
         });
 

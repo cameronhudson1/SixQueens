@@ -140,7 +140,7 @@ public class ViewProxy implements ModelListener{
 						case 'S':
 							row = in.readByte();
 							col = in.readByte();
-							listener.squareChosen(row, col);
+							listener.squareChosen(row, col, ViewProxy.this);
 							break;
 						default:
 							error ("Bad message");
