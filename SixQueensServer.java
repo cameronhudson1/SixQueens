@@ -22,9 +22,16 @@ public class SixQueensServer{
 	 */
 	public static void main(String[] args){
 		// Parse command line arguments.
-		if (args.length != 2) serverUsage();
+		if (args.length != 2) argNumError();
 		String host = args[0];
-		int port = Integer.parseInt(args[1]);
+		int port = 0;
+		try{
+			port = Integer.parseInt(args[1]);
+			if(port < 0 || port > 65535)
+				throw new Exception("Psych!  That's the wrong port!");
+		} catch(Exception e){
+			invalidPort(args[1]);
+		}
 
 		try{
 			// Listen for connections from clients.
@@ -45,15 +52,69 @@ public class SixQueensServer{
 					model = null;
 				}
 			}
-		}
-		catch (IOException exc){
-			error (exc);
+		} catch (IOException exc) {
+			ioError();
+		} catch (SecurityException exc) {
+			securityError();
 		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                             Private Methods                               //
 ///////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * argNumError
+	 *
+	 * Prints an error message for number of arguments
+	 * 
+	 * @param IOException exc
+	 * @return None
+	 */
+	private static void argNumError(){
+		System.err.println("Error: incorrect number of arguments.");
+		serverUsage();
+	}
+
+	/**
+	 * invalidPort
+	 *
+	 * Prints invalid port connection message
+	 *
+	 * @param String s
+	 * @return None
+	 */
+	private static void invalidPort(String s){
+		System.err.println("Error: " + s + " is not a valid port.");
+		serverUsage();
+	}
+
+
+	/**
+	 * ioError
+	 *
+	 * Prints an error message for IO
+	 * 
+	 * @param IOException exc
+	 * @return None
+	 */
+	private static void ioError(){
+		System.err.println ("Error: Cannot assign requested address (Bind failed)");
+		serverUsage();
+	}
+
+	/**
+	 * securityError
+	 *
+	 * Prints securityError message
+	 *
+	 * @param  SecurityException s
+	 * @return None
+	 */
+	private static void securityError(){
+		System.err.println("Error: Permission denied (Bind failed)");
+		serverUsage();
+	}
 
 	/**
 	 * serverUsage
@@ -63,25 +124,9 @@ public class SixQueensServer{
 	 * @param None
 	 * @return None
 	 */
-	public static void serverUsage(){
+	private static void serverUsage(){
 		System.err.println("Usage: java SixQueensServer <host> <port>");
 		System.exit(1);
 	}
-
-
-	/**
-	 * error
-	 *
-	 * Prints an error message 
-	 * 
-	 * @param IOException exc
-	 * @return None
-	 */
-	private static void error (IOException exc){
-		System.err.println ("GoServer: I/O error");
-		exc.printStackTrace (System.err);
-		System.exit(1);
-	}
-
 }
 
