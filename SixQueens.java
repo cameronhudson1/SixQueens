@@ -20,6 +20,9 @@ public class SixQueens{
 
 	/**
 	 * Main Program
+	 *
+	 * @param None
+	 * @return None
 	 */
 	public static void main(String[] args){
 		// Parse command line arguments.

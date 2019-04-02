@@ -1,11 +1,9 @@
 /*
-====================================================================
-Name: Cameron Hudson
-File:SixQueensModel.java
-
-Model the backend logic.  Handles instantiating a BoardState and
-listening to the ViewProxy for 
-=====================================================================
+* Name: Cameron Hudson
+* File:SixQueensModel.java
+* 
+* Model the backend logic.  Handles instantiating a BoardState and
+* listening to the ViewProxy for 
 */
 
 import java.util.LinkedList;
@@ -20,9 +18,9 @@ public class SixQueensModel implements ViewListener{
 	private boolean isFinished;
 
 	/**
-	 * BoardState
+	 * SixQueensModel
 	 *
-	 * Constructs a BoardState object
+	 * Constructs a SixQueensModel object
 	 *
 	 * @param None
 	 * @return None
@@ -35,12 +33,30 @@ public class SixQueensModel implements ViewListener{
 //                              Public Methods                               //
 ///////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * newGame
+	 *
+	 * wrapper call to doNewGame().  Called by
+	 * ViewProxy when it recievs a newGame request
+	 *
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void newGame(ModelListener view){
 		if(name2 != null){
 			doNewGame();
 		}
 	}
 
+	/**
+	 * join
+	 *
+	 * joins a player to a new game and waits or starts game
+	 *
+	 * @param ModelListener view
+	 * @param String name
+	 * @return None
+	 */
 	public void join(ModelListener view, String name){
 		if (name1 == null){
 			name1 = name;
@@ -53,6 +69,18 @@ public class SixQueensModel implements ViewListener{
 		}
 	}
 
+	/**
+	 * squareChosen
+	 *
+	 * Invoked upon a square click being read by the
+	 * ViewProxy.  Updates model and respinds
+	 * accordingly
+	 *
+	 * @param int row
+	 * @param int col
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void squareChosen(int row, int col, ModelListener view){
 		if (view != turn || board.isBlocked(row, col)){
 			return;
@@ -61,6 +89,16 @@ public class SixQueensModel implements ViewListener{
 		}
 	}
 
+	/**
+	 * quit
+	 *
+	 * When one client quits, this handles the cleanup
+	 * process of the model and notifies the other view
+	 * in the game
+	 *
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void quit(ModelListener view){
 		if (view1 != null)
 			view1.quit();
@@ -70,6 +108,14 @@ public class SixQueensModel implements ViewListener{
 		isFinished = true;
 	}
 
+	/**
+	 * isFinished
+	 *
+	 * Returns wether the game has been finished
+	 *
+	 * @param None
+	 * @return Boolean
+	 */
 	public synchronized boolean isFinished(){
 		return isFinished;
 	}
@@ -98,7 +144,17 @@ public class SixQueensModel implements ViewListener{
 		view2.otherTurn (name1);
 	}
 
-
+	/**
+	 * setQueen
+	 *
+	 * Sets a space in the board to a queen.  If a player
+	 * hasn't won, it switched turns and notifies the view,
+	 * otehrwise it responds with the appropriate winner
+	 * and sets the game to finished.
+	 *
+	 * @param ModelListener view
+	 * @return None
+	 */
 	private void setQueen(int row, int col, ModelListener view){
 		board.setQueen(row, col);
 		view1.setQueen(row, col);

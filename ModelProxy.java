@@ -1,14 +1,12 @@
-/*
-=====================================================================
-Name: Cameron Hudson
-File: ModelProxy
-
-Class ModelProxy provides a network proxy in the client for accessing
-or communicating with the server.
-
-This program resides in the view and gives access to the model
-=====================================================================
-*/
+/**
+ * Name: Cameron Hudson
+ * File: ModelProxy
+ * 
+ * Class ModelProxy provides a network proxy in the client for accessing
+ * or communicating with the server.
+ * 
+ * This program resides in the view and gives access to the model
+ */
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -23,6 +21,14 @@ public class ModelProxy implements ViewListener{
 	private DataOutputStream out;
 	private ModelListener listener;
 
+	/**
+	 * ModelProxy
+	 *
+	 * Constructs a ModelProxy object for the SixQueensView
+	 *
+	 * @param Socket socket
+	 * @return None
+	 */
 	public ModelProxy(Socket socket) throws IOException{
 		this.socket = socket;
 		socket.setTcpNoDelay (true);
@@ -34,11 +40,30 @@ public class ModelProxy implements ViewListener{
 //                              Public Methods                               //
 ///////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * setModelListener
+	 *
+	 * Sets listener field to modelListener
+	 *
+	 * @param ModelListener modelListener
+	 * @return None
+	 */
 	public void setModelListener(ModelListener modelListener){
 		this.listener = modelListener;
 		new ReaderThread().start();
 	}
 
+	/**
+	 * newGame
+	 *
+	 * Writes the appropriate encoding for requesting a new game
+	 *
+	 * 	Delimiter: G
+	 *  Following Arguments: None
+	 *
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void newGame(ModelListener view){
 		try{
 			out.writeByte ('G');
@@ -48,6 +73,17 @@ public class ModelProxy implements ViewListener{
 		}
 	}
 
+	/**
+	 * join
+	 *
+	 * Writes the appropriate encoding for joining a game
+	 *
+	 * 	Delimiter: J
+	 *  Following Arguments: UTF name
+	 *
+	 * @param String name
+	 * @return None
+	 */
 	public void join(ModelListener view, String name){
 		try{
 			out.writeByte ('J');
@@ -59,6 +95,19 @@ public class ModelProxy implements ViewListener{
 		}
 	}
 
+	/**
+	 * setQueen
+	 *
+	 * Writes the appropriate encoding for clicking a square
+	 *
+	 * 	Delimiter: Q
+	 *  Following Arguments: Byte r, Byte c
+	 *
+	 * @param int r
+	 * @param int c
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void squareChosen(int row, int col, ModelListener view){
 		try{
 			out.writeByte('S');
@@ -70,6 +119,17 @@ public class ModelProxy implements ViewListener{
 		}
 	}
 
+	/**
+	 * setQueen
+	 *
+	 * Writes the appropriate encoding for sending a quit signal
+	 *
+	 * 	Delimiter: Z
+	 *  Following Arguments: None
+	 *
+	 * @param ModelListener view
+	 * @return None
+	 */
 	public void quit(ModelListener view){
 		try{
 			out.writeByte('Z');
@@ -83,7 +143,22 @@ public class ModelProxy implements ViewListener{
 //                              Helper Class                                 //
 ///////////////////////////////////////////////////////////////////////////////
 
+
 	private class ReaderThread extends Thread{
+		/**
+	 	* run
+	 	*
+	 	* Runs a thread for reading.  Instantited in a private class
+	 	* which extends thread.  Reads the IOStreams from the sockets
+	 	* and when messages are sent in, will decode them and call their 
+	 	* corresponding methods
+	 	*
+	 	* 	ENCODING:
+	 	*  	
+	 	*
+	 	* @param None
+	 	* @return None
+	 	*/
 		public void run(){
 			int op;
 			int row, col;
@@ -148,13 +223,26 @@ public class ModelProxy implements ViewListener{
 //                             Private Methods                               //
 ///////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * error
+	 *
+	 * Prints an error message from a String
+	 * 
+	 * @param String msg
+	 * @return None
+	 */
 	private static void error(String msg){
 		System.err.printf ("ModelProxy: %s%n", msg);
 		System.exit (1);
 	}
 
 	/**
-	 * Print an I/O error message and terminate the program.
+	 * error
+	 *
+	 * Prints an error message from an IOException
+	 * 
+	 * @param IOException exc
+	 * @return None
 	 */
 	private static void error(IOException exc){
 		System.err.println ("ModelProxy: I/O error");

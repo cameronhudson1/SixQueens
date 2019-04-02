@@ -42,12 +42,14 @@ public class SixQueensView implements ModelListener {
 /////////////////////////////////////////////////////////
 
     /**
-     * Construct a new Six Queens view object.
+     * SixQueensView
      *
-     * @param  name  Player's name.
+     * Constructs a SixQueensView object
+     *
+     * @param String name
+     * @return None
      */
-    private SixQueensView( String name ) {
-
+    private SixQueensView(String name){
         frame = new JFrame( "Six Queens -- " + name );
         JPanel p1 = new JPanel();
         p1.setLayout( new BoxLayout( p1, BoxLayout.Y_AXIS ) );
@@ -96,7 +98,7 @@ public class SixQueensView implements ModelListener {
 
         frame.pack();
         frame.setVisible( true );
-    } // end constructor
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 //                              Public Methods                               //
@@ -140,6 +142,14 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * newGame
+     * 
+     * Handles the swing thread generation for a new game
+     *
+     * @param None
+     * @return None
+     */
     public void newGame(){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -148,6 +158,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * setQueen
+     * 
+     * Handles the swing thread generation for setting a queen
+     *
+     * @param int r
+     * @param int c
+     * @return None
+     */
     public void setQueen(int r, int c){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -156,6 +175,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * setVisible
+     * 
+     * Handles the swing thread generation for setting a square to visible
+     *
+     * @param int r
+     * @param int c
+     * @return None
+     */
     public void setVisible(int r, int c){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -164,6 +192,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * waitingForPartner
+     * 
+     * Handles the swing thread generation for setting message to
+     * "Waiting for Partner"
+     *
+     * @param None
+     * @return None
+     */
     public void waitingForPartner(){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -173,6 +210,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * yourTurn
+     * 
+     * Handles the swing thread generation for setting message to
+     * "Your Turn"
+     *
+     * @param None
+     * @return None
+     */
     public void yourTurn(){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -182,6 +228,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * otherTurn
+     * 
+     * Handles the swing thread generation for setting message to
+     * "Other Turn"
+     *
+     * @param None
+     * @return None
+     */
     public void otherTurn(String name){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -191,6 +246,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * youWin
+     * 
+     * Handles the swing thread generation for setting message to
+     * "You Win"
+     *
+     * @param None
+     * @return None
+     */
     public void youWin(){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -200,6 +264,15 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * otherWin
+     * 
+     * Handles the swing thread generation for setting message to
+     * "Other Win"
+     *
+     * @param None
+     * @return None
+     */
     public void otherWin(String name){
         onSwingThreadDo (new Runnable(){
             public void run(){
@@ -209,10 +282,26 @@ public class SixQueensView implements ModelListener {
         });
     }
 
+    /**
+     * quit
+     * 
+     * Exits on quit of other view
+     *
+     * @param None
+     * @return None
+     */
     public void quit(){
         System.exit(0);
     }
 
+    /**
+     * onSwingThreadDo
+     * 
+     * Wrapper call to swing thread
+     *
+     * @param Runnable task
+     * @return None
+     */
     private static void onSwingThreadDo(Runnable task){
         try{
             SwingUtilities.invokeAndWait (task);

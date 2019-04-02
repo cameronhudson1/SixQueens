@@ -1,11 +1,10 @@
 /*
-====================================================================
-Name: Cameron Hudson
-File: BoardState.java
+ * Name: Cameron Hudson
+ * File: BoardState.java
+ * 
+ * Maintains the state of the baord in the model.
+ */
 
-Maintains the state of the baord in the model.
-=====================================================================
-*/
 public class BoardState{
 	private boolean[][] queenBoard;
 	private boolean[][] blockedBoard;

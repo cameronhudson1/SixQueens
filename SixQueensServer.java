@@ -1,12 +1,10 @@
 /*
-====================================================================
-Name: Cameron Hudson
-File: SizQueensServer.java
-
-Starts up a server for the six queens game and handles
-routing connections between players.
-=====================================================================
-*/
+ * Name: Cameron Hudson
+ * File: SizQueensServer.java
+ * 
+ * Starts up a server for the six queens game and handles
+ * routing connections between players.
+ */
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -72,11 +70,11 @@ public class SixQueensServer{
 
 
 	/**
-	 * clientUsage
+	 * error
 	 *
-	 * Prints an error message for the client
+	 * Prints an error message 
 	 * 
-	 * @param None
+	 * @param IOException exc
 	 * @return None
 	 */
 	private static void error (IOException exc){
